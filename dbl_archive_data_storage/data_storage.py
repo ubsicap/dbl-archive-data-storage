@@ -11,7 +11,7 @@ class DataStorage(object):
     """
 
     @classmethod
-    def fs_data_storage(root_directory):
+    def fs_data_storage(cls, root_directory):
         """ Return a partially defined instance around a file-system storage
         class"""
         from frugal_storer import FSFrugalStorer
@@ -19,7 +19,7 @@ class DataStorage(object):
         return partial(DataStorage, FSFrugalStorer(root_directory))
 
     @classmethod
-    def s3_data_storage(bucket_name, s3_access_key, s3_secret_key):
+    def s3_data_storage(cls, bucket_name, s3_access_key, s3_secret_key):
         """ Return a partially defined instance around a s3 storage class. """
         from frugal_storer import S3FrugalStorer
 
