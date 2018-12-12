@@ -14,7 +14,6 @@ f_storer.add_key(
     required=False,
     default="true"
 )
-print(f_storer.collections)
 f_storer.collection("0123456789abcdef", mode="create")
 for f in f_storer.collections.values():
     print("{0}".format(f))
