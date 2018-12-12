@@ -105,3 +105,6 @@ venv.bak/
 
 # ide specific files
 .vscode/
+
+# platform garbage
+.DS_Store
