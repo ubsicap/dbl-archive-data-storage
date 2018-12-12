@@ -27,11 +27,11 @@ def fs_data_storage(fd_data_storage_path):
     after each use."""
     import os
     import shutil
-    from dbl_archive_data_storage import DataStorage
+    from dbl_archive_data_storage import DBLDataStorage
 
     if not os.path.exists(fd_data_storage_path):
         os.mkdir(fd_data_storage_path)
-    yield DataStorage.fs_data_storage(fd_data_storage_path)
+    yield DBLDataStorage.fs_data_storage(fd_data_storage_path)
     shutil.rmtree(fd_data_storage_path)
 
 
