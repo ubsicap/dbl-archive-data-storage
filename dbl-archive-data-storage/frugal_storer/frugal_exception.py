@@ -1,0 +1,2 @@
+class FrugalStorerException(Exception):
+    pass
