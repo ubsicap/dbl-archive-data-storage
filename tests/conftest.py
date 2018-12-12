@@ -17,11 +17,22 @@ def config():
 
 
 @pytest.fixture
-def fs_data_storage(config):
+def fd_data_storage_path(config):
+    return config.get('fs.directory', '/tmp/data_storage_testing')
+
+
+@pytest.fixture
+def fs_data_storage(fd_data_storage_path):
+    """ Return a data storage object based on a fs store, reset the store 
+    after each use."""
+    import os
+    import shutil
     from dbl_archive_data_storage import DataStorage
 
-    return DataStorage.fs_data_storage(
-        config.get('fs.directory', '/tmp/data_storage_testing'))
+    if not os.path.exists(fd_data_storage_path):
+        os.mkdir(fd_data_storage_path)
+    yield DataStorage.fs_data_storage(fd_data_storage_path)
+    shutil.rmtree(fd_data_storage_path)
 
 
 @pytest.fixture
@@ -41,12 +52,12 @@ def generate_entry_content(name):
 
     content = ''.join(random.choice(
         string.ascii_uppercase + string.digits) for _ in range(64))
-    return (name, content, hash_string(content))
+    return (name, hash_string(content), content)
 
 
 @pytest.fixture
 def test_entry_rev1_listing():
-    """ return tuples of name, content, checksum for a selection of names.
+    """ return tuples of name, checksum, content for a selection of names.
     content and checksum will change on every run of the code."""
     return [generate_entry_content(name) for name in [
         'releases/foo.xml', 'releases/bar.xml', 'sources/source.zip',
