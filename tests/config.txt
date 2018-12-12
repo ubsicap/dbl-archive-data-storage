@@ -1,0 +1,1 @@
+fs.directory=/tmp/data_storage
