@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from frugal_storer.frugal_storer import FrugalStorer
+from frugal_storer import FrugalStorer
 
 
 f_storer = FrugalStorer(r"[0-9a-f]{16}")
