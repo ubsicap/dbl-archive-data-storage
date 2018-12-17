@@ -26,15 +26,17 @@ class FrugalStorer:
         if len(self.collections) > 0:
             raise FrugalStorerException("Cannot add keys to non-empty storer")
         if spec["name"] in self.hash_keys:
-            raise FrugalStorerException("Cannot redefine existing key {0}".format(spec["name"]))
+            raise FrugalStorerException(
+                "Cannot redefine existing key {0}".format(spec["name"]))
         if "regex" not in spec:
-            raise FrugalStorerException("Regex required for key {0}".format(spec["name"]))
+            raise FrugalStorerException(
+                "Regex required for key {0}".format(spec["name"]))
         final_spec = dict(
             name=spec["name"],
             regex=spec["regex"],
             position=len(self.hash_keys),
             required=spec["required"] if "required" in spec else True,
-            default = spec["default"] if "default" in spec else None
+            default=spec["default"] if "default" in spec else None
         )
         self.hash_keys[spec["name"]] = FrugalKey(**final_spec)
 
@@ -51,19 +53,23 @@ class FrugalStorer:
         * "fetch|create" will return a matching container if it exists, or new container if it does not.
         """
         if mode not in ["fetch", "create", "fetch|create"]:
-            raise FrugalStorerException("Mad mode '{0}' in collection()").format(mode)
-        existing_collections = [c for c in self.collections if c.id == collection_id]
+            raise FrugalStorerException(
+                "Mad mode '{0}' in collection()".format(mode))
+        existing_collections = [
+            c for c in self.collections if c.id == collection_id]
         if len(existing_collections) == 0:
             if mode == "fetch":
                 return None
             else:
                 self._new_collection(collection_id)
         elif mode == "create":
-            raise FrugalStorerException("Attempting to create collection that already exists")
+            raise FrugalStorerException(
+                "Attempting to create collection that already exists")
         else:
             return existing_collections[0]
 
     def _new_collection(self, collection_id):
         if not re.search("^{0}$".format(self.id_regex), collection_id):
-            raise FrugalStorerException("id for new collection {0} does not match expected format {1}".format(collection_id, self.id_regex))
+            raise FrugalStorerException(
+                "id for new collection {0} does not match expected format {1}".format(collection_id, self.id_regex))
         self.collections[collection_id] = FrugalCollection(collection_id)
