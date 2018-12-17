@@ -14,14 +14,14 @@ class DBLDataStorage(object):
     def fs_data_storage(cls, root_directory):
         """ Return a partially defined instance around a file-system storage
         class"""
-        from frugal_storer import FSFrugalStorer
+        from .frugal_storer import FSFrugalStorer
 
         return partial(cls, FSFrugalStorer(root_directory))
 
     @classmethod
     def s3_data_storage(cls, bucket_name, s3_access_key, s3_secret_key):
         """ Return a partially defined instance around a s3 storage class. """
-        from frugal_storer import S3FrugalStorer
+        from .frugal_storer import S3FrugalStorer
 
         return partial(
             cls, S3FrugalStorer(bucket_name, s3_access_key, s3_secret_key))
